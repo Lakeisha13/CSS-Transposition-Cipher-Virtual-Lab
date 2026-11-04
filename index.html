@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transposition Cipher Virtual Lab</title>
+  <meta name="description" content="Interactive virtual lab for Rail Fence and Columnar Transposition Ciphers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="lab-layout">
+    
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" aria-label="Lab navigation">
+      <div class="brand">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <h1>Virtual Lab</h1>
+      </div>
+
+      <div class="nav-label">Curriculum</div>
+      <button class="nav-btn active" data-tab="aim">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        Aim
+      </button>
+      <button class="nav-btn" data-tab="objectives">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Objective
+      </button>
+      <button class="nav-btn" data-tab="theory">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Theory
+      </button>
+      <button class="nav-btn" data-tab="procedure">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Procedure
+      </button>
+
+      <div class="nav-label">Laboratory</div>
+      <button class="nav-btn" data-tab="simulation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        Simulation
+      </button>
+      <button class="nav-btn" data-tab="testcases">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Test Cases
+      </button>
+
+      <div class="nav-label">Evaluation</div>
+      <button class="nav-btn" data-tab="quiz">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Quiz
+      </button>
+      <button class="nav-btn" data-tab="viva">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        Viva Voce
+      </button>
+      <button class="nav-btn" data-tab="references">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        References
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <header>
+        <div class="header-breadcrumbs">
+          Transposition Cipher <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg> <span class="active" id="activeBreadcrumb">Aim</span>
+        </div>
+        <div class="header-controls">
+          <button class="btn-icon" id="resetLabBtn" title="Reset Lab" aria-label="Reset Lab">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <!-- AIM -->
+        <section id="aim" class="tab-pane active">
+          <div class="section-header">
+            <h2>Aim</h2>
+            <p>Fundamental transposition cryptography experiment</p>
+          </div>
+
+          <div class="card">
+            <h3>Experiment Aim</h3>
+            <ul>
+              <li>To study and observe position-based rearrangement (permutations) in classical cryptography using the Rail Fence Cipher (keyless transposition) and the Columnar Transposition Cipher (keyed transposition).</li>
+              <li>To demonstrate how inverse permutations restore the original plaintext during decryption.</li>
+            </ul>
+          </div>
+
+        </section>
+
+        <!-- OBJECTIVES -->
+        <section id="objectives" class="tab-pane">
+          <div class="section-header">
+            <h2>Objective</h2>
+            <p>Learning outcomes for the transposition cryptography experiment</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Learning Objectives</h3>
+              <ul>
+                <li>Understand the distinction between Substitution (altering symbol identity) and Transposition (altering symbol position).</li>
+                <li>Observe the zig-zag row traversal and its cycle period: <code class="math-formula">T = 2(r - 1)</code>.</li>
+                <li>Learn how keyword alphabetical ranking dictates column extraction order.</li>
+                <li>Construct an uneven final row without adding dummy characters, then reconstruct the original column lengths during decryption.</li>
+                <li>Observe the forward permutation <code class="math-formula">pi(i)</code> and inverse <code class="math-formula">pi^-1(j)</code>.</li>
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- THEORY -->
+        <section id="theory" class="tab-pane">
+          <div class="section-header">
+            <h2>Theory</h2>
+            <p>Mathematical foundation of permutation-based ciphers</p>
+          </div>
+
+          <div class="card">
+            <h3>1. Transposition Ciphers &amp; Permutation Theory</h3>
+            <p>
+              In a transposition cipher, message symbols are unchanged but their positions are permuted.
+              For a message of length <code class="math-formula">n</code>, encryption is a bijective mapping:
+            </p>
+            <div class="math-formula" style="margin-top:12px;">
+              pi : {0, 1, ..., n-1} &rarr; {0, 1, ..., n-1} &nbsp; such that &nbsp; C[pi(i)] = P[i]
+            </div>
+            <p style="margin-top: 16px;">
+              Decryption uses the inverse permutation <code class="math-formula">pi^-1</code>:
+            </p>
+            <div class="math-formula" style="margin-top:12px;">
+              P[i] = C[pi(i)] &hArr; P[pi^-1(j)] = C[j]
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>2. Rail Fence Cipher</h3>
+              <p style="color: var(--text-secondary);">
+                Characters are written in a zig-zag pattern across <code class="math-formula">r</code> horizontal rows.
+                The ciphertext is produced by reading rows from top to bottom.
+              </p>
+              <div class="callout">
+                <strong>Cycle Period:</strong> One full oscillation spans <code class="math-formula">2(r - 1)</code> characters.<br>
+                <strong>Row Assignment:</strong> Row for index <code class="math-formula">i</code> oscillates between 0 and <code class="math-formula">r-1</code>.
+              </div>
+              <h4 style="margin-top:20px;">Example: HELLOWORLD, 3 Rows</h4>
+              <pre class="math-formula" style="white-space: pre; line-height: 1.8; margin-top:8px;">
+Row 1: H . . . O . . . L .  (Indices 0, 4, 8)
+Row 2: . E . L . W . R . D  (Indices 1, 3, 5, 7, 9)
+Row 3: . . L . . . O . . .  (Indices 2, 6)
+Ciphertext: H O L E L W R D L O</pre>
+            </div>
+
+            <div class="card">
+              <h3>3. Columnar Transposition</h3>
+              <p style="color: var(--text-secondary);">
+                Plaintext is written row-by-row into a grid beneath a keyword of length <code class="math-formula">m</code>.
+                Columns are read vertically in alphabetical order of the keyword letters.
+              </p>
+              <div class="callout">
+                <strong>Key Ranking:</strong> ZEBRA &rarr; A(1), B(2), E(3), R(4), Z(5).<br>
+                <strong>Lab Keyword Rule:</strong> This simulator keeps only the first occurrence of each keyword letter; BALLOON becomes BALON. This is a deduplicated-key variation.
+              </div>
+              <h4 style="margin-top:20px;">Uneven Final Row</h4>
+              <p style="color: var(--text-secondary); font-size: 0.88rem;">
+                When the message length is not a multiple of the keyword length, the final row remains incomplete.
+                No dummy X characters are inserted. During decryption, the simulator calculates the original length of each column.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROCEDURE -->
+        <section id="procedure" class="tab-pane">
+          <div class="section-header">
+            <h2>Procedure</h2>
+            <p>Systematic step-by-step cryptographic procedures</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Rail Fence</h3>
+              <h4>Encryption</h4>
+              <ol>
+                <li>Remove spaces and symbols, and write all letters in uppercase.</li>
+                <li>Write the letters diagonally down and up across the given number of rows.</li>
+                <li>Repeat this pattern until all letters are written.</li>
+                <li>Read the letters row by row to get the ciphertext.</li>
+              </ol>
+              <h4 style="margin-top:24px;">Decryption</h4>
+              <ol>
+                <li>Mark the positions where the letters were written in the zig-zag pattern.</li>
+                <li>Fill the marked positions with ciphertext letters, row by row.</li>
+                <li>Follow the zig-zag pattern to read the letters in the correct order.</li>
+                <li>Join the letters to get the original plaintext.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h3>Columnar Transposition</h3>
+              <h4>Encryption</h4>
+              <ol>
+                <li>Remove spaces and symbols, and write all letters in uppercase.</li>
+                <li>Remove repeated keyword letters, keeping the first occurrence (for example, BALLOON becomes BALON).</li>
+                <li>Write the resulting keyword above the plaintext in a table.</li>
+                <li>Arrange each plaintext character once, row by row, under the keyword. Leave unused cells in the final row blank.</li>
+                <li>Read the columns in alphabetical order of the remaining keyword letters to get the ciphertext.</li>
+              </ol>
+              <h4 style="margin-top:24px;">Decryption</h4>
+              <ol>
+                <li>Remove repeated keyword letters, keeping the first occurrence, then rank the remaining letters alphabetically.</li>
+                <li>Calculate the original length of each column from the ciphertext length and keyword length.</li>
+                <li>Place each ciphertext segment into its corresponding column in ranked order.</li>
+                <li>Read the reconstructed table row by row to recover the original plaintext.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- SIMULATION -->
+        <section id="simulation" class="tab-pane">
+          <div class="section-header">
+            <h2>Interactive Simulation</h2>
+            <p>Live animated cryptographic permutation simulator</p>
+          </div>
+
+          <div class="sim-nav">
+            <button class="sim-tab-btn active" id="simTabRfBtn">Rail Fence (Keyless)</button>
+            <button class="sim-tab-btn" id="simTabColBtn">Columnar (Keyed)</button>
+          </div>
+
+          <!-- Rail Fence Simulator -->
+          <div id="simRfPanel">
+            <div class="grid-2">
+              <div class="card">
+                <h3>Configuration</h3>
+
+                <div class="form-group">
+                  <div class="form-label">
+                    <label for="rfInput">Input Message</label>
+                    <span id="rfCharCount">10 chars</span>
+                  </div>
+                  <textarea id="rfInput" placeholder="Enter plaintext or ciphertext...">HELLOWORLD</textarea>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label">
+                    <label for="rfRailsSlider">Number of Rows</label>
+                    <span class="slider-val" id="rfRailsVal">3</span>
+                  </div>
+                  <div class="range-wrapper">
+                    <input type="range" id="rfRailsSlider" min="2" max="8" value="3">
+                  </div>
+                  <small style="color: var(--text-muted); display: block; margin-top: 12px;">
+                    Cycle period: <code class="math-formula" id="rfCycleInfo">T = 2(3-1) = 4</code>
+                  </small>
+                </div>
+
+                <div class="actions-row">
+                  <button class="btn btn-primary" id="rfEncryptBtn">Encrypt</button>
+                  <button class="btn btn-secondary" id="rfDecryptBtn">Decrypt</button>
+                  <button class="btn btn-secondary" id="rfClearBtn">Clear</button>
+                </div>
+
+                <div class="form-group" style="margin-top:24px;">
+                  <div class="form-label">
+                    <label>Result</label>
+                    <button class="btn-icon" style="width:28px; height:28px;" id="rfCopyBtn" title="Copy to clipboard">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                  </div>
+                  <div class="output-box" id="rfOutputBox">HOLELWRDLO</div>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Playback Controller</h3>
+
+                <div class="playback-bar">
+                  <div class="playback-controls">
+                    <button class="btn-icon" id="rfStepBackBtn" title="Step Back">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
+                    </button>
+                    <button class="btn-icon" id="rfPlayBtn" title="Play / Pause">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="rfPlayIcon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
+                    <button class="btn-icon" id="rfStepFwdBtn" title="Step Forward">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+                    </button>
+                    <button class="btn-icon" id="rfResetStepBtn" title="Reset">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                    </button>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 12px; flex:1;">
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Speed</span>
+                    <input type="range" id="rfSpeedSlider" min="200" max="1500" value="600" title="Animation Speed">
+                  </div>
+                </div>
+
+                <div class="status-narrator" id="rfStatusNarrator">
+                  <span id="rfNarratorText">Ready. Click Encrypt or Play to trace the permutation.</span>
+                </div>
+
+                <h4 style="margin-top:24px;">Permutation Quick Summary</h4>
+                <div id="rfPermQuickBadges" style="display: flex; flex-wrap: wrap; gap: 8px; max-height: 120px; overflow-y: auto;"></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Zig-Zag Row Arrangement</h3>
+                <span class="badge-tag" id="rfVizModeTag">Encryption Phase</span>
+              </div>
+              <div class="viz-panel" id="rfVizPanel">
+                <div class="rail-container" id="rfRailContainer"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columnar Simulator -->
+          <div id="simColPanel" style="display: none;">
+            <div class="grid-2">
+              <div class="card">
+                <h3>Configuration</h3>
+
+                <div class="form-group">
+                  <div class="form-label">
+                    <label for="colInput">Input Message</label>
+                    <span id="colCharCount">12 chars</span>
+                  </div>
+                  <textarea id="colInput" placeholder="Enter plaintext or ciphertext...">ATTACKATDAWN</textarea>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label">
+                    <label for="colKeyInput">Keyword</label>
+                    <span id="colKeyLength">Length: 5</span>
+                  </div>
+                  <input type="text" id="colKeyInput" value="ZEBRA" placeholder="e.g. ZEBRA">
+
+                  <div class="quick-tags">
+                    <button class="tag-btn" data-key="ZEBRA">ZEBRA</button>
+                    <button class="tag-btn" data-key="CRYPTO">CRYPTO</button>
+                    <button class="tag-btn" data-key="SECRET">SECRET</button>
+                    <button class="tag-btn" data-key="GERMAN">GERMAN</button>
+                    <button class="tag-btn" data-key="BALLOON">BALLOON</button>
+                  </div>
+
+                  <small class="padding-info">Repeated keyword letters are reduced to their first occurrence (BALLOON → BALON).</small>
+                  <div class="key-chips-row" id="colKeyChipsRow"></div>
+                </div>
+
+                <div class="actions-row">
+                  <button class="btn btn-primary" id="colEncryptBtn">Encrypt</button>
+                  <button class="btn btn-secondary" id="colDecryptBtn">Decrypt</button>
+                  <button class="btn btn-secondary" id="colClearBtn">Clear</button>
+                </div>
+
+                <div class="form-group" style="margin-top:24px;">
+                  <div class="form-label">
+                    <label>Result</label>
+                    <button class="btn-icon" style="width:28px; height:28px;" id="colCopyBtn" title="Copy to clipboard">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                  </div>
+                  <div class="output-box" id="colOutputBox">CATTTANADAKW</div>
+                  <small id="colPaddingInfo" class="padding-info">No padding is added. Each input character appears exactly once in the matrix.</small>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Playback Controller</h3>
+
+                <div class="playback-bar">
+                  <div class="playback-controls">
+                    <button class="btn-icon" id="colStepBackBtn" title="Step Back">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
+                    </button>
+                    <button class="btn-icon" id="colPlayBtn" title="Play / Pause">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="colPlayIcon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
+                    <button class="btn-icon" id="colStepFwdBtn" title="Step Forward">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+                    </button>
+                    <button class="btn-icon" id="colResetStepBtn" title="Reset">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                    </button>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 12px; flex:1;">
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Speed</span>
+                    <input type="range" id="colSpeedSlider" min="200" max="1500" value="600" title="Animation Speed">
+                  </div>
+                </div>
+
+                <div class="status-narrator" id="colStatusNarrator">
+                  <span id="colNarratorText">Ready. Click Encrypt or Play to trace the column permutation.</span>
+                </div>
+
+                <h4 style="margin-top:24px;">Permutation Quick Summary</h4>
+                <div id="colPermQuickBadges" style="display: flex; flex-wrap: wrap; gap: 8px; max-height: 120px; overflow-y: auto;"></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Permutation Matrix</h3>
+                <span class="badge-tag" id="colVizModeTag">Encryption Phase</span>
+              </div>
+              <div class="viz-panel" id="colVizPanel">
+                <div class="col-matrix-wrapper" id="colMatrixWrapper"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TEST CASES -->
+        <section id="testcases" class="tab-pane">
+          <div class="section-header">
+            <h2>Test Cases</h2>
+            <p>Standard validated benchmarks</p>
+          </div>
+          <div class="grid-3" id="testCasesContainer"></div>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="quiz" class="tab-pane">
+          <div class="section-header">
+            <h2>Self-Assessment Quiz</h2>
+            <p>Evaluate your conceptual understanding</p>
+          </div>
+
+          <div class="card">
+            <div id="quizContainer"></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 32px; flex-wrap: wrap; gap: 14px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+              <button class="btn btn-primary" id="submitQuizBtn">Submit Answers</button>
+              <button class="btn btn-secondary" id="resetQuizBtn">Reset Quiz</button>
+              <div style="font-size: 1.2rem; font-weight: 600; font-family: var(--font-mono); margin-left: auto;" id="quizScoreDisplay"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIVA VOCE -->
+        <section id="viva" class="tab-pane">
+          <div class="section-header">
+            <h2>Viva Voce Questions</h2>
+            <p>Frequently asked academic exam questions</p>
+          </div>
+          <div id="vivaContainer"></div>
+        </section>
+
+        <!-- REFERENCES -->
+        <section id="references" class="tab-pane">
+          <div class="section-header">
+            <h2>References</h2>
+            <p>Authoritative cryptography literature</p>
+          </div>
+
+          <div class="card">
+            <h3>Textbooks</h3>
+            <ol style="margin-top:16px;">
+              <li>William Stallings, <em>Cryptography and Network Security: Principles and Practice</em>, 8th Ed., Pearson.</li>
+              <li>Behrouz A. Forouzan, <em>Cryptography and Network Security</em>, McGraw-Hill.</li>
+              <li>Alfred J. Menezes, Paul C. van Oorschot, Scott A. Vanstone, <em>Handbook of Applied Cryptography</em>, CRC Press.</li>
+              <li>Simon Singh, <em>The Code Book</em>, Anchor Books.</li>
+            </ol>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
